@@ -8,8 +8,8 @@
 // Nextion TX -> ESP32 NEXTION_RX  (use level shifting/divider if Nextion is 5V UART)
 // Nextion RX <- ESP32 NEXTION_TX
 #define NEXTION_BAUD 9600
-#define NEXTION_RX   18
-#define NEXTION_TX   17
+#define NEXTION_RX   44
+#define NEXTION_TX   43
 
 HardwareSerial Nex(2);
 
@@ -188,16 +188,25 @@ static void handleCommand(String input) {
   nexSetXFloat("x3", i1, 2);  // Current
   nexSetXFloat("x2", t1, 2);  // Temp
 
-  // ---------------- Cell 2 ----------------
-  Serial.println("\nCell 2:");
-  setVoltage(SLAVE_ADDRESS_2, voltage2);
-  delay(100);
-  readMuxVoltageBoard2(voltage2);
+ // ---------------- Cell 2 ----------------
+Serial.println("\nCell 2:");
+setVoltage(SLAVE_ADDRESS_2, voltage2);
+delay(100);
+float v2 = readMuxVoltageBoard2(voltage2);
 
-  setCurrent(SLAVE_ADDRESS_2, current2);
-  delay(100);
-  float t2 = 0;
-  readMuxCurrentBoard2(current2, t2);
+setCurrent(SLAVE_ADDRESS_2, current2);
+delay(100);
+float t2 = 0;
+float i2 = readMuxCurrentBoard2(current2, t2);
+
+// Push Cell 2 measurements to Nextion fields
+// Make sure in Nextion editor:
+//  - x12.vvs1=2 for voltage (V)
+//  - x11.vvs1=2 for current (A)
+//  - x10.vvs1=2 for temperature (°C)
+nexSetXFloat("x12", v2, 2);  // Voltage
+nexSetXFloat("x11", i2, 2);  // Current
+nexSetXFloat("x10", t2, 2);  // Temp
 
   // ---------------- Cell 3 ----------------
   Serial.println("\nCell 3:");
