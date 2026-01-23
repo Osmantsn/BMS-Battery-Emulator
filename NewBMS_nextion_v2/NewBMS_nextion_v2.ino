@@ -217,6 +217,11 @@ nexSetXFloat("x10", t2, 2);  // Temp
   setCurrent(SLAVE_ADDRESS_3, current3);
   delay(100);
   float t3 = 0;
+
+nexSetXFloat("x15", v3, 2);  // Voltage
+nexSetXFloat("x14", i3, 2);  // Current
+nexSetXFloat("x13", t3, 2);  // Temp
+
   readMuxCurrentBoard3(current3, t3);
 
   // ---------------- Cell 4 ----------------
@@ -228,6 +233,11 @@ nexSetXFloat("x10", t2, 2);  // Temp
   setCurrent(SLAVE_ADDRESS_4, current4);
   delay(100);
   float t4 = 0;
+
+nexSetXFloat("x18", v4, 2);  // Voltage
+nexSetXFloat("x17", i4, 2);  // Current
+nexSetXFloat("x16", t4, 2);  // Temp
+
   readMuxCurrentBoard4(current4, t4);
 
   Serial.println("\nEnter next command:");
